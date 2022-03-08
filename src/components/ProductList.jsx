@@ -16,26 +16,32 @@ const ProductList = ({ addToCartHandler }) => {
   };
   const categoryFilter = (productData, category) => {
     let newData = union([]);
+    let flag = false;
     for (const cat in category) {
-      if (category[cat])
+      if (category[cat]) {
+        flag = true;
         newData = union(
           newData,
           productData.filter((el) => el.category === cat)
         );
+      }
     }
     console.log("cate", newData);
-    return newData;
+    return [flag, newData];
   };
   const sizeFilter = (productData, sizes) => {
+    let flag = false;
     let newData = union([]);
     for (const size in sizes) {
-      if (sizes[size])
+      if (sizes[size]) {
+        flag = true;
         newData = union(
           newData,
           productData.filter((el) => el.size === size)
         );
+      }
     }
-    return newData;
+    return [flag, newData];
   };
   const ratingFilter = (data, rating) => {
     const rate = Number(rating[0]);
@@ -53,10 +59,13 @@ const ProductList = ({ addToCartHandler }) => {
   const filterFunc = () => {
     let newData = [...data];
     newData = priceRange(newData, state.filter.maxPrice);
-    const catergoriedData = categoryFilter(newData, state.filter.category);
-    if (catergoriedData.length !== 0) newData = catergoriedData;
-    const sizedData = sizeFilter(newData, state.filter.size);
-    if (sizedData.length !== 0) newData = sizedData;
+    const [categoryFlag, catergoriedData] = categoryFilter(
+      newData,
+      state.filter.category
+    );
+    if (categoryFlag) newData = catergoriedData;
+    const [sizeFlag, sizedData] = sizeFilter(newData, state.filter.size);
+    if (sizeFlag) newData = sizedData;
     if (state.filter.rating) {
       newData = ratingFilter(newData, state.filter.rating);
     }
@@ -95,7 +104,7 @@ const ProductList = ({ addToCartHandler }) => {
               name="rangeInput"
               className="slider"
               min="0"
-              max="1000"
+              max="999"
               value={state.filter.maxPrice}
               onChange={(e) => {
                 dispatch({
