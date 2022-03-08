@@ -74,6 +74,7 @@ const ProductList = ({ addToCartHandler }) => {
         <div className="productlist-aside-header">
           <p className="font-wt-bold">Filters</p>
           <p
+            style={{ cursor: "pointer" }}
             onClick={() => {
               dispatch({ type: "clearFilter" });
             }}
@@ -114,7 +115,7 @@ const ProductList = ({ addToCartHandler }) => {
                 type="checkbox"
                 name="category-checkbox"
                 id="men-checkbox"
-                value="men"
+                checked={state.filter.category.men}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -136,6 +137,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="women-checkbox"
                 value="women"
+                checked={state.filter.category.women}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -157,6 +159,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="kids-checkbox"
                 value="kids"
+                checked={state.filter.category.kids}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -183,6 +186,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="s-checkbox"
                 value="men"
+                checked={state.filter.size.s}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -204,6 +208,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="m-checkbox"
                 value="women"
+                checked={state.filter.size.m}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -225,6 +230,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="l-checkbox"
                 value="kids"
+                checked={state.filter.size.l}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -246,6 +252,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="xl-checkbox"
                 value="kids"
+                checked={state.filter.size.xl}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -267,6 +274,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="category-checkbox"
                 id="xxl-checkbox"
                 value="kids"
+                checked={state.filter.size.xxl}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -293,6 +301,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="rating-radio"
                 id="4star-radio"
                 value="4star"
+                checked={state.filter.rating === "4-star" ? true : false}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -308,6 +317,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="rating-radio"
                 id="3star-radio"
                 value="3star"
+                checked={state.filter.rating === "3-star" ? true : false}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -323,6 +333,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="rating-radio"
                 id="2star-radio"
                 value="2star"
+                checked={state.filter.rating === "2-star" ? true : false}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -338,6 +349,7 @@ const ProductList = ({ addToCartHandler }) => {
                 name="rating-radio"
                 id="1star-radio"
                 value="1star"
+                checked={state.filter.rating === "1-star" ? true : false}
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -358,6 +370,9 @@ const ProductList = ({ addToCartHandler }) => {
                 name="sortby-radio"
                 id="lowtohigh-radio"
                 value="lowtohigh"
+                checked={
+                  state.filter.sortByPrice === "low-to-high" ? true : false
+                }
                 onChange={() =>
                   dispatch({
                     type: "filter",
@@ -373,6 +388,9 @@ const ProductList = ({ addToCartHandler }) => {
                 name="sortby-radio"
                 id="hightolow-radio"
                 value="hightolow"
+                checked={
+                  state.filter.sortByPrice === "high-to-low" ? true : false
+                }
                 onChange={() =>
                   dispatch({
                     type: "filter",
