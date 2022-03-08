@@ -5,6 +5,7 @@ import Product from "./Product";
 const ProductList = ({ addToCartHandler }) => {
   const { data } = useProductData();
   const { state, dispatch } = useProductData();
+
   const union = (...arr) => {
     const uni = arr.reduce((acc, curr) => {
       return acc.concat(
@@ -76,7 +77,7 @@ const ProductList = ({ addToCartHandler }) => {
     console.log("filter", newData);
     return newData;
   };
-
+  const filteredData = filterFunc();
   return (
     <div className="productlist-content">
       <aside className="productlist-aside nav-desktop">
@@ -416,10 +417,10 @@ const ProductList = ({ addToCartHandler }) => {
         <div className="productlist-main-container">
           <div className="productlist-main-header">
             <p className="font-wt-bold">Showing All Products</p>
-            <p>(Showing 20 products)</p>
+            <p>(Showing {filteredData.length} products)</p>
           </div>
           <div className="productlist-main-card-container">
-            {filterFunc().map((el) => {
+            {filteredData.map((el) => {
               return (
                 <Product
                   el={el}
