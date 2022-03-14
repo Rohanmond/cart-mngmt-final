@@ -1,78 +1,25 @@
 import { useState } from "react";
 import { useProductData } from "./CreateContext";
+import {
+  priceRange,
+  categoryFilter,
+  sortByPrice,
+  sizeFilter,
+  ratingFilter
+} from "./utils";
 import Product from "./Product";
 
 const ProductList = ({ addToCartHandler }) => {
   const { data } = useProductData();
   const { state, dispatch } = useProductData();
 
-  const union = (...arr) => {
-    const uni = arr.reduce((acc, curr) => {
-      return acc.concat(
-        curr.filter((el) => !acc.some((ele) => ele.id === el.id))
-      );
-    }, []);
-    console.log(uni);
-    return uni;
-  };
-  const categoryFilter = (productData, category) => {
-    let newData = union([]);
-    let flag = false;
-    for (const cat in category) {
-      if (category[cat]) {
-        flag = true;
-        newData = union(
-          newData,
-          productData.filter((el) => el.category === cat)
-        );
-      }
-    }
-    console.log("cate", newData);
-    return [flag, newData];
-  };
-  const sizeFilter = (productData, sizes) => {
-    let flag = false;
-    let newData = union([]);
-    for (const size in sizes) {
-      if (sizes[size]) {
-        flag = true;
-        newData = union(
-          newData,
-          productData.filter((el) => el.size === size)
-        );
-      }
-    }
-    return [flag, newData];
-  };
-  const ratingFilter = (data, rating) => {
-    const rate = Number(rating[0]);
-    return data.filter((el) => el.rating >= rate);
-  };
-  const sortByPrice = (data, sortCat) => {
-    if (sortCat === "high-to-low")
-      return [...data].sort((a, b) => b.price - a.price);
-    else if (sortCat === "low-to-high")
-      return [...data].sort((a, b) => a.price - b.price);
-  };
-  const priceRange = (productData, maxValue) => {
-    return productData.filter((el) => el.price <= maxValue);
-  };
   const filterFunc = () => {
     let newData = [...data];
     newData = priceRange(newData, state.filter.maxPrice);
-    const [categoryFlag, catergoriedData] = categoryFilter(
-      newData,
-      state.filter.category
-    );
-    if (categoryFlag) newData = catergoriedData;
-    const [sizeFlag, sizedData] = sizeFilter(newData, state.filter.size);
-    if (sizeFlag) newData = sizedData;
-    if (state.filter.rating) {
-      newData = ratingFilter(newData, state.filter.rating);
-    }
-    if (state.filter.sortByPrice) {
-      newData = sortByPrice(newData, state.filter.sortByPrice);
-    }
+    newData = categoryFilter(newData, state.filter.category);
+    newData = sortByPrice(newData, state.filter.sortByPrice);
+    newData = sizeFilter(newData, state.filter.size);
+    newData = ratingFilter(newData, state.filter.rating);
 
     console.log("filter", newData);
     return newData;
